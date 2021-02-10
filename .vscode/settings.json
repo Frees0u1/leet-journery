@@ -1,0 +1,7 @@
+{
+    "emmet.showSuggestionsAsSnippets": true,
+    "files.associations": {
+        "iostream": "cpp",
+        "string": "cpp"
+    }
+}
