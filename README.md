@@ -45,7 +45,14 @@ int main() {
 点击 Run ->Start Debugging 即可开始调试任务
 
 ### Enable C++11
-点击Code->Preferences->Settings， 搜索Clang: Cflags、Clang: Cxxflags增加C++11 的配置即可
+### Enable C++11
+Step 1:
+点击Code->Preferences->Settings， 搜索Clang: Cflags、Clang: Cxxflags增加C++11 的配置
 
 * Clang: Cflags增加Item： "-std=c11"
 * Clang: Cxxflags增加Item： "-std=c++11"
+
+Step 2：
+File>>Preference>>Settings>>Extensions
+find C_Cpp>Default:Cpp Standard drop down menu
+set that to c++11
