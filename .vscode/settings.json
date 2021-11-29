@@ -20,6 +20,9 @@
         "ratio": "cpp",
         "streambuf": "cpp",
         "string_view": "cpp",
-        "complex": "cpp"
+        "complex": "cpp",
+        "unordered_map": "cpp",
+        "list": "cpp",
+        "__split_buffer": "cpp"
     }
 }
