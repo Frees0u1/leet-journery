@@ -24,5 +24,6 @@
         "unordered_map": "cpp",
         "list": "cpp",
         "__split_buffer": "cpp"
-    }
+    },
+    "C_Cpp.errorSquiggles": "Disabled"
 }

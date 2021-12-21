@@ -5,11 +5,14 @@
 #include <unordered_set>
 #include <vector>
 #include <algorithm>
+#include "../tool/leet_tool.h"
 using namespace std;
 
 class XUnionSet {
 public:
     XUnionSet(int n, const vector<int>& heights) {
+        // there are two union set, there are Left and Right union
+        // from the beginning, 
         for(int i = 0; i < n; i++) {
             left.push_back(i);
             right.push_back(i);
@@ -101,8 +104,6 @@ public:
         sort(indices.begin(), indices.end(), [&heights](int lhs, int rhs) {
             return heights[lhs] > heights[rhs];
         });
-
-
         for(int i = 0; i < n; i++) {
             printf("(%d, %d) ", heights[indices[i]], indices[i]);
         }
@@ -110,10 +111,11 @@ public:
 
         XUnionSet xUnionSet(n, heights);
         unordered_set<int> occured;
+
         occured.insert(indices[0]);
- 
         long long maxArea = heights[indices[0]];
         xUnionSet.printUnionSet();
+        
         for(int i = 1; i < n; i++) {
 
             if(occured.find(indices[i] - 1) != occured.end()) {

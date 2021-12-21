@@ -5,6 +5,7 @@
 #include <unordered_set>
 #include <vector>
 #include <algorithm>
+#include "../tool/leet_tool.h"
 using namespace std;
 
 class XUnionSet {
@@ -71,35 +72,45 @@ private:
 class Solution {
 public:
     long long solve(const vector<vector<char>>& matrix) {
-        if(matrix.size() == 0) {
+        if(matrix.size() == 0 || matrix[0].size() == 0) {
             return 0;
         }
-        
-        vector<int> indices;
-        vector<int> indicesZeros;
-        for(int i = 0; i < matrix[0].size(); i++) {
-            if(matrix[0][i] == '1') indices.push_back(i);
-            else indicesZeros.push_back(i);
-        }
-        for(auto&&x : indicesZeros) {
-            indices.push_back(x);
+        vector<int> histgram(matrix[0].size(), 0);
+        long long maxArea = 0;
+        for(int i = 0; i < matrix.size(); i++) {
+            printf("================================= [ %d ] ================================= \n", i);           
+            createHistgram(matrix[i], histgram);
+            leet::printArray(histgram);
+            maxArea = max(maxArea, solveHistgram(histgram));
         }
 
-        
+        return maxArea;
     }
 
-    long long solveHistgram(const vector<int>&indices, const vector<int>& heights) {
+private: 
+    long long solveHistgram(const vector<int>& heights) {
+        if(heights.size() == 0) {
+            return 0;
+        }
         if(heights.size() == 1) {
             return heights[0];
         }
         int n = heights.size();
 
+        vector<int> indices;
+        for(int i = 0; i < n; i++) {
+            indices.emplace_back(i);
+        }
+        
+        sort(indices.begin(), indices.end(), [&heights](int lhs, int rhs) {
+            return heights[lhs] > heights[rhs];
+        });
         XUnionSet xUnionSet(n, heights);
         unordered_set<int> occured;
         occured.insert(indices[0]);
  
         long long maxArea = heights[indices[0]];
-        xUnionSet.printUnionSet();
+        //xUnionSet.printUnionSet();
         for(int i = 1; i < n; i++) {
 
             if(occured.find(indices[i] - 1) != occured.end()) {
@@ -114,17 +125,28 @@ public:
                 xUnionSet.calcArea(indices[i], heights)
             );
             occured.insert(indices[i]);
-            xUnionSet.printUnionSet();
+            // xUnionSet.printUnionSet();
         }
 
         return maxArea;
+    }
+
+    void createHistgram(const vector<char>& row, vector<int>& previousHistgram) {
+        for(int i = 0; i < row.size(); i++) {
+            if(row[i] == '0')  previousHistgram[i] = 0;
+            else previousHistgram[i] += 1;
+        }        
     }
 };
 
 int main() {
     Solution sol;
     vector<int> heights{2,1,5,6,2,3};
+    vector<vector<char>> matrix{
+        {'1', '0', '1', '0', '0'}, 
+        {'1', '0', '1', '1', '1'}
+    };
 
-    cout <<  sol.solve(heights) << endl;
+    cout <<  sol.solve(matrix) << endl;
     return 0;
 }
