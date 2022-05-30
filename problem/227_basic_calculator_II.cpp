@@ -96,30 +96,62 @@ public:
 class Solution2 {
 public:
   int calculate(string expr) {
-    stack<int> oprands;
-    stack<int> operators;
-    int curNum = 0;
+    stack<long long> oprands;
+    stack<char> operators;
+    long long curNum = 0;
     for (int i = 0; i < expr.length(); i++) {
       char c = expr[i];
       if (c >= '0' && c <= '9') {
         curNum = curNum * 10 + c - '0';
       }
       if (i == expr.length() - 1 || isOperator(c)) {
-        char lastOperator = operators.top(); operators.pop();
-        switch (lastOperator) {
+        char lastOperator = getOperator(operators);
 
+        int tmp;
+        switch (lastOperator) {
+          case '+': 
+            oprands.push(curNum); 
+            break;
+          case '-': 
+            oprands.push(-curNum); 
+            break;
+          case '*':
+           tmp = oprands.top(); oprands.pop();
+           oprands.push(tmp * curNum);
+           break;
+          case '/': 
+            tmp = oprands.top(); oprands.pop();
+            oprands.push(tmp / curNum);
+            break;
+          default: throw "invalid operator";
         }
+
+        if(isOperator(c)) operators.push(c);
+        curNum = 0;
       }
     }
+
+    int result = 0;
+    while(!oprands.empty()) {
+      result += oprands.top(); oprands.pop();
+    }
+
+    return result;
   }
 private:
   bool isOperator(char c) {
     return c == '+' || c == '-' || c == '*' || c == '/';
   }
-}
+
+  char getOperator(stack<char>& operators) {
+    if(operators.empty()) return '+';
+    char op = operators.top(); operators.pop();
+    return op;
+  }
+};
 
 int main() {
-  Solution sol;
+  Solution2 sol;
   string expression;
   while (cin >> expression) {
     cout << expression << " = " << sol.calculate(expression) << endl;
