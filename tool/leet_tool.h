@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include <stack>
+#include <queue>
 
 namespace leet {
   template<typename T>
@@ -39,6 +40,17 @@ namespace leet {
       tmp.pop();
     }
     std::cout << std::endl;
+  }
+
+    template <typename T>
+  void printQueue(const std::queue<T>& que) {
+    std::queue<T> tmp = std::queue<T>(que);
+    std::cout << "[";
+    while (!tmp.empty()) {
+      std::cout << tmp.front() << ", ";
+      tmp.pop();
+    }
+    std::cout << "]" << std::endl;
   }
 
   class UnionSet {
