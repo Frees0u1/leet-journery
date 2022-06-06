@@ -72,7 +72,9 @@
       "typeinfo": "cpp",
       "unordered_set": "cpp",
       "utility": "cpp",
-      "xstring": "cpp"
+      "xstring": "cpp",
+      "xhash": "cpp",
+      "xiosbase": "cpp"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }
